@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import HomeView, PersonnageView, FilmView, LoginView
+from .views import HomeView, PersonnageView, LoginView, SerieView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
