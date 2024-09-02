@@ -1,39 +1,41 @@
 {% load static %}
 <!doctype html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
 
-        <title>{% block title %}Page sans titre{% endblock %} - MiniTp2</title>
-    </head>
-    <body>
-        <nav class="container">
-            <h1>MiniTp2</h1>
-            <ul>
-                <li>
-                    <a href="{% url "home" %}" {% if request.resolver_match.url_name == "home" %}class="active"{% endif %}>
-                        Accueil
-                    </a>
+    <title>{% block title %}Page sans titre{% endblock %} - MiniTp2</title>
+</head>
+<body>
+    <header class="header flex align-items-center justify-content-between p-3">
+        <div class="logo text-center">
+            <img src="{% static 'logo.png' %}" alt="Logo" class="img-fluid  rounded-circle" style="max-height: 80px;">
+        </div>
+        <nav class="nav d-flex justify-content-center flex-grow-1">
+            <ul class="nav-list d-flex align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Accueil</a>
                 </li>
-                <li>
-                    {% comment %} href="{% url "about" %}" {% if request.resolver_match.url_name == "about" %}class="active"{% endif %} {% endcomment %}
-                    <a >
-                        À propos
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'personnage' %}active{% endif %}" href="{% url 'personnage' %}">Personnage</a>
                 </li>
-                <li>
-                    <a >
-                        Quizz
-                    </a>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'film' %}active{% endif %}" href="{% url 'film' %}">Film</a>
                 </li>
             </ul>
         </nav>
+        
+    </header>
+
+    <div class="container">
         {% block content %}
         {% endblock %}
-        <script src="{% static 'main.js' %}"></script>
-    </body>
+    </div>
+
+    <script src="{% static 'main.js' %}"></script>
+</body>
 </html>
