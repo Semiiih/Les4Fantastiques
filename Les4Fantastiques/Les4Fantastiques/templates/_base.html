@@ -20,12 +20,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url "about" %}" {% if request.resolver_match.url_name == "about" %}class="active"{% endif %}>
+                    {% comment %} href="{% url "about" %}" {% if request.resolver_match.url_name == "about" %}class="active"{% endif %} {% endcomment %}
+                    <a >
                         À propos
                     </a>
                 </li>
                 <li>
-                    <a href="{% url "quizz" %}" {% if request.resolver_match.url_name == "quizz" %}class="active"{% endif %}>
+                    <a >
                         Quizz
                     </a>
                 </li>
