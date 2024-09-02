@@ -3,3 +3,5 @@ from .home import *
 from .about import *
 from .personnage import *
 from .film import *
+from .login import *
+from .serie import *
