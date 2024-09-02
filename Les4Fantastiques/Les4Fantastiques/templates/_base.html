@@ -1,0 +1,38 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+
+        <title>{% block title %}Page sans titre{% endblock %} - MiniTp2</title>
+    </head>
+    <body>
+        <nav class="container">
+            <h1>MiniTp2</h1>
+            <ul>
+                <li>
+                    <a href="{% url "home" %}" {% if request.resolver_match.url_name == "home" %}class="active"{% endif %}>
+                        Accueil
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "about" %}" {% if request.resolver_match.url_name == "about" %}class="active"{% endif %}>
+                        À propos
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url "quizz" %}" {% if request.resolver_match.url_name == "quizz" %}class="active"{% endif %}>
+                        Quizz
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        {% block content %}
+        {% endblock %}
+        <script src="{% static 'main.js' %}"></script>
+    </body>
+</html>
