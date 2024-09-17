@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# settings.py
+MARVEL_PUBLIC_KEY = '819bf36e600faa8dba5d37abc18ce47b'
+MARVEL_PRIVATE_KEY = '705034aa77b79b0b158adb0473d6cd07a68a5c5d'
+
 
 # Application definition
 

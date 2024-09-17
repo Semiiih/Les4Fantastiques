@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import MarvelCharacterSerializer
+from django.conf import settings
+
 
 class MarvelCharacterAPIView(APIView):
 
@@ -18,10 +20,12 @@ class MarvelCharacterAPIView(APIView):
         params = {
             'ts': timestamp,
             'apikey': public_key,
-            'hash': hash_value
+            'hash': hash_value,
+            'limit': 20
         }
+
         try:
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=params, verify=False)
             response.raise_for_status()
             data = response.json()
             characters = data.get('data', {}).get('results', [])
