@@ -1,7 +1,30 @@
-{% extends "_base.html" %} {% load static %} {% block title %}Personnage{% endblock %}
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Personnages{% endblock %}
+
 {% block content %}
 <div class="container">
-  <h2>Page de perso</h2>
-  <p>Bienvenue sur notre site web.</p>
+    <h2>Liste des Personnages Marvel</h2>
+    <div id="characters-container" class="row">
+  </div>
 </div>
+
+<script src="{% static 'marvel_characters.js' %}"></script>
 {% endblock %}
+
+
+
+{% comment %} <div class="row">
+  {% for character in characters %}
+      <div class="col-md-3">
+          <div class="card mb-4">
+              <img src="{{ character.thumbnail.path }}.{{ character.thumbnail.extension }}" class="card-img-top" alt="{{ character.name }}">
+              <div class="card-body">
+                  <h5 class="card-title">{{ character.name }}</h5>
+                  <p class="card-text">{{ character.description|default:"Description non disponible." }}</p>
+              </div>
+          </div>
+      </div>
+  {% endfor %}
+</div> {% endcomment %}
