@@ -1,0 +1,27 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block title %}Séries{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Page des Séries</h2>
+  <p>Bienvenue sur notre page de séries Marvel.</p>
+
+  {% if series %}
+    <ul>
+      {% for serie in series %}
+        <li>
+          <h3>{{ serie.name }}</h3>
+          <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" alt="{{ serie.name }}">
+          <p>{{ serie.description }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Aucune série trouvée.</p>
+  {% endif %}
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+</div>
+{% endblock %}
