@@ -13,7 +13,7 @@
 <body>
     <header class="header flex align-items-center justify-content-between p-3">
         <div class="logo text-center">
-            <img src="{% static 'logo.png' %}" alt="Logo" class="img-fluid  rounded-circle" style="max-height: 80px;">
+            <img src="{% static 'logo.png' %}" alt="Logo" class="img-fluid rounded-circle" style="max-height: 80px;"/>
         </div>
         <nav class="nav d-flex justify-content-center flex-grow-1">
             <ul class="nav-list d-flex align-items-center">
@@ -28,6 +28,10 @@
                 </li>
             </ul>
         </nav>
+
+        <a href="{% url 'login' %}" >
+            <img src="{% static 'spiderman.png' %}" alt="acount" style="position: absolute; top: 60px; right: 50px; width: 70px"/>
+        </a>
         
     </header>
 
