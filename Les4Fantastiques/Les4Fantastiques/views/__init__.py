@@ -3,3 +3,4 @@ from .home import *
 from .about import *
 from .personnage import *
 from .serie import *
+from .favori import *
