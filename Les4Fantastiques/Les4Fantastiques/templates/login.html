@@ -1,7 +1,14 @@
-{% extends "_base.html" %} {% load static %} {% block title %}Accueil{% endblock %}
+{% load static %} {% block title %}{% endblock %}
 {% block content %}
 <div class="container">
-  <h2>Connexion</h2>
-  <p>login</p>
+
+
+<a href="{% url 'home' %}" class="svg-trigger">👈</a> 
+
+  <div style='text-align: center;'>
+    <h1>Connexion</h1>
+    <p>login</p>
+  </div>
+
 </div>
 {% endblock %}
