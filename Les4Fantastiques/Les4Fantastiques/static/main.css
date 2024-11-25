@@ -1,6 +1,6 @@
 .header {
-  background-color: #f8f9fa; /* Couleur de fond légère */
-  border-bottom: 2px solid #dee2e6; /* Bordure en bas */
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
 }
 
 .logo {
@@ -14,19 +14,19 @@
 }
 
 .nav-item {
-  margin-left: 20px; /* Espacement entre les liens */
+  margin-left: 20px;
 }
 
 .nav-link {
   text-decoration: none;
   color: #000;
-  padding-bottom: 10px; /* Espacement en bas pour aligner les liens */
+  padding-bottom: 10px;
   position: relative;
 }
 
 .nav-link.active {
   font-weight: bold;
-  color: #007bff; /* Couleur active */
+  color: #007bff;
 }
 
 .nav-link::after {
@@ -42,9 +42,9 @@
 }
 
 .nav-link:hover::after {
-  width: 100%; /* Animation survol */
+  width: 100%;
 }
 
 .svg-margin {
-  margin-top: 20px; /* Ajuste cette valeur selon ton besoin */
+  margin-top: 20px;
 }

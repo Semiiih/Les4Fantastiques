@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const url = `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${apiKey}&hash=${hash}`;
 
-  // Ajoutez un style CSS pour le padding
   const style = document.createElement("style");
   style.innerHTML = `
         .card-body {
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
   document.head.appendChild(style);
 
-  // Fonction pour ajouter un personnage aux favoris
+  /////////////////// Fonction pour ajouter un personnage aux favoris ///////////////////
   function addToFavorites(character) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     if (!favorites.some((fav) => fav.id === character.id)) {
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Fonction pour créer l'HTML de la carte de personnage
+  /////////////////// Fonction pour créer l'HTML de la carte de personnage ///////////////////
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       container.innerHTML = htmlContent;
 
-      // Ajouter des événements de clic sur chaque bouton "Like"
+      /////////////////// Ajouter des événements de clic sur chaque bouton Like ///////////////////
       document.querySelectorAll(".like-btn").forEach((button) => {
         button.addEventListener("click", (event) => {
           const characterId = event.target.getAttribute("data-id");

@@ -7,24 +7,32 @@
 <div class="container">
     <h2>Liste des Personnages Marvel</h2>
     <div id="characters-container" class="row">
+    </div>
   </div>
+  
+  <script src="{% static 'marvel_characters.js' %}"></script>
+  {% endblock %}
+
+    {% comment %} {% if characters %}
+        <div class="row">
+            {% for character in characters %}
+                <div class="col-md-3">
+                    <div class="card mb-4">
+                        <img src="{{ character.thumbnail.path }}.{{ character.thumbnail.extension }}" class="card-img-top" alt="{{ character.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ character.name }}</h5>
+                            <p class="card-text">{{ character.description|default:"Description non disponible." }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun personnage trouvé.</p>
+    {% endif %}
+
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
 </div>
-
-<script src="{% static 'marvel_characters.js' %}"></script>
-{% endblock %}
-
-
-
-{% comment %} <div class="row">
-  {% for character in characters %}
-      <div class="col-md-3">
-          <div class="card mb-4">
-              <img src="{{ character.thumbnail.path }}.{{ character.thumbnail.extension }}" class="card-img-top" alt="{{ character.name }}">
-              <div class="card-body">
-                  <h5 class="card-title">{{ character.name }}</h5>
-                  <p class="card-text">{{ character.description|default:"Description non disponible." }}</p>
-              </div>
-          </div>
-      </div>
-  {% endfor %}
-</div> {% endcomment %}
+{% endblock %} {% endcomment %}

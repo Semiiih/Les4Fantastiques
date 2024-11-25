@@ -1,27 +1,41 @@
 {% extends "_base.html" %}
 {% load static %}
-{% block title %}Séries{% endblock %}
+
+{% block title %}Séries Marvel{% endblock %}
+
 {% block content %}
 <div class="container">
-  <h2>Page des Séries</h2>
-  <p>Bienvenue sur notre page de séries Marvel.</p>
+  <h2>Liste des Séries Marvel</h2>
+  <p>Bienvenue sur notre page dédiée aux séries Marvel.</p>
+  <div id="series-container" class="row">
+  </div>
+</div>
 
-  {% if series %}
-    <ul>
+<script src="{% static 'marvel_series.js' %}"></script>
+{% endblock %}
+
+
+  {% comment %} {% if series %}
+    <div class="row">
       {% for serie in series %}
-        <li>
-          <h3>{{ serie.name }}</h3>
-          <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" alt="{{ serie.name }}">
-          <p>{{ serie.description }}</p>
-        </li>
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" class="card-img-top" alt="{{ serie.title }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ serie.title }}</h5>
+              <p class="card-text">{{ serie.description|default:"Description non disponible." }}</p>
+              <a href="{{ serie.urls.0.url }}" class="btn btn-primary" target="_blank">Voir les détails</a>
+            </div>
+          </div>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
     <p>Aucune série trouvée.</p>
   {% endif %}
 
   {% if error %}
-    <p class="error">{{ error }}</p>
+    <p class="text-danger">{{ error }}</p>
   {% endif %}
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
