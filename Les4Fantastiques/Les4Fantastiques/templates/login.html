@@ -1,14 +1,17 @@
 {% load static %} {% block title %}{% endblock %}
 {% block content %}
+
 <div class="container">
 
-
-<a href="{% url 'home' %}" class="svg-trigger">👈</a> 
+<a href="{% url 'home' %}" >
+  <span>👈</span> Retour à l'accueil
+</a>
 
   <div style='text-align: center;'>
     <h1>Connexion</h1>
-    <p>login</p>
+    <p style='font-size: 1.5rem;'>login</p>
   </div>
 
 </div>
+
 {% endblock %}
