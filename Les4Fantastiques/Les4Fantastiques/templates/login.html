@@ -1,14 +1,37 @@
-{% load static %} {% block title %}{% endblock %}
+{% load static %} 
+{% block title %}Connexion{% endblock %}
 {% block content %}
-<div class="container">
 
+<div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; background-color: #f5f5f5;">
 
-<a href="{% url 'home' %}" class="svg-trigger">👈</a> 
+  <a href="{% url 'home' %}" style="text-decoration: none; color: #007bff; font-size: 1rem; margin-bottom: 20px;">
+    <span>👈</span> Retour à l'accueil
+  </a>
 
-  <div style='text-align: center;'>
-    <h1>Connexion</h1>
-    <p>login</p>
+  <div class="login-form" style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; width: 100%; max-width: 400px;">
+    <h1 style="font-size: 2rem; margin-bottom: 20px;">Connexion</h1>
+
+    <form method="POST" style="width: 100%; padding-top: 20px;">
+      {% csrf_token %}
+      
+      <div class="form-group" style="margin-bottom: 15px; text-align: left;">
+        <label for="username" style="font-size: 1rem; display: block; margin-bottom: 5px;">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" required style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+      </div>
+
+      <div class="form-group" style="margin-bottom: 15px; text-align: left;">
+        <label for="password" style="font-size: 1rem; display: block; margin-bottom: 5px;">Mot de passe :</label>
+        <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+      </div>
+
+      <button type="submit" class="submit-btn" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s ease;">Se connecter</button>
+    </form>
+
+    <p style="margin-top: 40px; font-size: 1rem;">Vous n'avez pas de compte ?</p>
+    <a href="{% url 'signup' %}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 1rem; transition: background-color 0.3s ease;">
+      Créer un compte
+    </a>
   </div>
-
 </div>
+
 {% endblock %}
