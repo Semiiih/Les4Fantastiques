@@ -4,27 +4,120 @@
 {% block title %}Personnages{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Liste des Personnages Marvel</h2>
+<div class="container-fluid page-content ">
+    <!-- Image en bannière qui prend toute la largeur -->
+    <div class="d-flex justify-content-center mb-4">
+        <img src="{% static 'heroMarvel.jpg' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
+    </div>
+    <h2 class="text-center">Liste des Personnages Marvel</h2>
     <div id="characters-container" class="row">
-  </div>
+        {% if characters %}
+            <div class="row">
+                {% for character in characters %}
+                    <div class="col-md-3">
+                        <div class="card mb-4" style="position: relative;">
+                            <!-- Image du personnage -->
+                            <img src="{{ character.thumbnail.path }}.{{ character.thumbnail.extension }}" class="card-img-top" alt="{{ character.name }}">
+                            <div class="card-body">
+                                <!-- Bouton Ajouter aux favoris -->
+                                <button class="like-btn" data-id="{{ character.id }}" data-name="{{ character.name }}">❤️</button>
+                                <h5 class="card-title">{{ character.name }}</h5>
+                                <p class="card-text">{{ character.description|default:"Description non disponible." }}</p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Aucun personnage trouvé.</p>
+        {% endif %}
+    </div>
+
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
 </div>
 
-<script src="{% static 'marvel_characters.js' %}"></script>
+<!-- Ajouter du style pour le bouton -->
+<style>
+    .card-body {
+        height: 300px;
+    }
+
+    h2 {
+        color: #03507E;
+        margin-bottom: 20px;
+    }
+
+    .page-content {
+        padding-right: 150px ; 
+        padding-left: 150px ; 
+        max-width: 95%; 
+    }
+    
+    .bg-custom {
+        background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+    .like-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: white;
+        color: #ff416c;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .card {
+        position: relative;
+    }
+</style>
+
+<!-- Script JavaScript pour ajouter un personnage aux favoris -->
+<script>
+    //////////// Fonction pour ajouter un personnage aux favoris ////////////
+    function addToFavorites(character) {
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (!favorites.some(fav => fav.id === character.id)) {
+            favorites.push(character);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            alert(`${character.name} ajouté aux favoris!`);
+        } else {
+            alert(`${character.name} est déjà dans vos favoris.`);
+        }
+    }
+
+    document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const card = event.target.closest(".card");
+            const characterId = event.target.getAttribute("data-id");
+            const characterName = event.target.getAttribute("data-name");
+            const imgElement = card.querySelector("img");
+            const imgSrc = imgElement.getAttribute("src");
+    
+            const character = { 
+                id: characterId, 
+                name: characterName, 
+                thumbnail: {
+                    path: imgSrc.split('.').slice(0, -1).join('.'), 
+                    extension: imgSrc.split('.').pop()
+                }
+            };
+    
+            addToFavorites(character);
+        });
+    });
+    
+</script>
+
 {% endblock %}
-
-
-
-{% comment %} <div class="row">
-  {% for character in characters %}
-      <div class="col-md-3">
-          <div class="card mb-4">
-              <img src="{{ character.thumbnail.path }}.{{ character.thumbnail.extension }}" class="card-img-top" alt="{{ character.name }}">
-              <div class="card-body">
-                  <h5 class="card-title">{{ character.name }}</h5>
-                  <p class="card-text">{{ character.description|default:"Description non disponible." }}</p>
-              </div>
-          </div>
-      </div>
-  {% endfor %}
-</div> {% endcomment %}

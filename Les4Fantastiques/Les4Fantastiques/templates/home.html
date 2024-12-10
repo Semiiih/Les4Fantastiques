@@ -1,7 +1,84 @@
-{% extends "_base.html" %} {% load static %} {% block title %}{% endblock %}
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Accueil{% endblock %}
+
 {% block content %}
-<div class="container">
-  <h2>Page d'accueil</h2>
-  <p>Bienvenue sur notre site web.</p>
+<div class="bg-custom py-5">
+  <div class="container my-5 p-5 rounded-3 shadow-lg" style="background: rgba(255, 255, 255, 0.9);">  <h1 class="text-center">Bienvenue sur l'Univers Marvel</h1>
+  <h2 class="text-center">Explorez les personnages, séries et mettez vos connaissances à l'épreuve avec notre quizz !</h2>
+
+  <div class="row justify-content-center">
+    <!-- Carte Personnages -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" onclick="window.location.href='{% url 'personnage' %}'">
+        <img src="{% static 'AffichePersonnage.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Personnages">
+        <div class="card-body text-center">
+          <h5 class="card-title">Personnages</h5>
+          <p class="card-text">Découvrez les héros et vilains Marvel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Séries -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" onclick="window.location.href='{% url 'serie' %}'">
+        <img src="{% static 'afficheSerie.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Séries">
+        <div class="card-body text-center">
+          <h5 class="card-title">Séries</h5>
+          <p class="card-text">Explorez les séries Marvel emblématiques.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte Quizz -->
+    <div class="col-md-4 mb-4">
+      <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" >
+        <img src="{% static 'afficheQuizz.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Quizz">
+        <div class="card-body text-center">
+          <h5 class="card-title">Quizz</h5>
+          <p class="card-text">Testez vos connaissances sur Marvel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<style>
+  .bg-custom {
+    background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  .card-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  h1 {
+      color: #03507E;
+      margin-top: 80px;
+  }
+
+  h2 {
+    color: red;
+    font-size: 18px;
+    margin-top: 100px;
+    margin-bottom: 30px;
+  }
+  
+  
+</style>
 {% endblock %}
