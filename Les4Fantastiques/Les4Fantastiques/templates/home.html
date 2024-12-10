@@ -6,7 +6,7 @@
 {% block content %}
 <div class="bg-custom py-5">
   <div class="container my-5 p-5 rounded-3 shadow-lg" style="background: rgba(255, 255, 255, 0.9);">  <h1 class="text-center">Bienvenue sur l'Univers Marvel</h1>
-  <h2 class="text-center">Explorez les personnages, séries et mettez vos connaissances à l'épreuve avec notre quizz !</h2>
+  <h2 class="text-center">Explorez les personnages, series et mettez vos connaissances à l'epreuve avec notre quizz !</h2>
 
   <div class="row justify-content-center">
     <!-- Carte Personnages -->
@@ -25,7 +25,7 @@
       <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" onclick="window.location.href='{% url 'serie' %}'">
         <img src="{% static 'afficheSerie.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Séries">
         <div class="card-body text-center">
-          <h5 class="card-title">Séries</h5>
+          <h5 class="card-title">Series</h5>
           <p class="card-text">Explorez les séries Marvel emblématiques.</p>
         </div>
       </div>
@@ -70,13 +70,23 @@
   h1 {
       color: #03507E;
       margin-top: 80px;
+      font-family: 'Avengers'
+  }
+
+  h5 {
+      font-family: 'AvengersBI'
+  }
+
+  p {
+      font-family: 'Avengers'
   }
 
   h2 {
     color: red;
-    font-size: 18px;
+    font-size: 20px;
     margin-top: 100px;
     margin-bottom: 30px;
+    font-family: 'AvengersBD'
   }
   
   

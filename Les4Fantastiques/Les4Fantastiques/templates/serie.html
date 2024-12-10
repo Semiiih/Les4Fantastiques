@@ -4,133 +4,154 @@
 {% block title %}Séries Marvel{% endblock %}
 
 {% block content %}
-<div class="container-fluid page-content">
-  <div class="d-flex justify-content-center mb-4">
-    <img src="{% static 'heroMarvel2.png' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
-  </div>
-
-  <h2 class="text-center">Liste des Séries Marvel</h2>
-  <div id="series-container" class="row"></div>
-
-  {% if series %}
-    <div class="row">
-      {% for serie in series %}
-        <div class="col-md-3">
-          <div class="card mb-4 shadow-sm">
-            <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" class="card-img-top" alt="{{ serie.title }}">
-            <div class="card-body">
-              <h5 class="card-title text-center">{{ serie.title }}</h5>
-              <p class="card-text">{{ serie.description|default:"Description non disponible." }}</p>
-              <div style="display: grid; gap: 10px;">
-                <a href="{{ serie.urls.0.url }}" 
-                   style="background: linear-gradient(to right, #ff416c, #ff4b2b); 
-                          border: none; 
-                          color: white; 
-                          padding: 10px 20px; 
-                          text-align: center; 
-                          font-size: 16px; 
-                          font-weight: bold; 
-                          border-radius: 50px; 
-                          transition: all 0.3s ease; 
-                          text-transform: uppercase; 
-                          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-                          text-decoration: none;" 
-                   target="_blank"
-                   onmouseover="this.style.background='linear-gradient(to right, #ff4b2b, #ff416c)'; this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 12px rgba(0, 0, 0, 0.3)';"
-                   onmouseout="this.style.background='linear-gradient(to right, #ff416c, #ff4b2b)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';">
-                  Voir les détails
-                </a>
-              </div>
-              
-              <button class="like-btn" data-id="{{ serie.id }}" data-name="{{ serie.title }}" style="position: absolute; top: 10px; right: 10px; background-color: white; color: #ff416c; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 18px;">
-                ❤️
-              </button>
-            </div>
-          </div>
+<div class='bg-custom'>
+    <div class="container-fluid page-content">
+        <!-- Image en bannière avec fond blanc -->
+        <div class="d-flex justify-content-center mb-4 bg-white">
+            <img src="{% static 'heroMarvel2.png' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
         </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-danger text-center">Aucune série trouvée.</p>
-  {% endif %}
 
-  {% if error %}
-    <p class="text-danger text-center">{{ error }}</p>
-  {% endif %}
+        <h2 class="text-center">Liste des Series Marvel</h2>
+        
+        <!-- Grille des séries -->
+        <div id="series-container" class="row">
+            {% if series %}
+                {% for serie in series %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                            <!-- Image de la série -->
+                            <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" class="card-img-top" alt="{{ serie.title }}">
+                            <div class="card-body text-center">
+                                <button class="like-btn" data-id="{{ serie.id }}" data-name="{{ serie.title }}">❤️</button>
+                                <h5 class="card-title">{{ serie.title }}</h5>
+                                <p class="card-text">{{ serie.description|default:"Description non disponible." }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-danger text-center">Aucune série trouvée.</p>
+            {% endif %}
+        </div>
+
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
+        {% endif %}
+    </div>
 </div>
 
+<!-- Styles -->
 <style>
-  .card-body {
-      height: 300px;
-  }
+    /* Fond principal */
+    .bg-custom {
+        background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 
-  h2 {
-    color: #03507E;
-    margin-bottom: 20px;
-  }
+    /* Bannière */
+    .bg-white {
+        background-color: white;
+    }
 
-  .page-content {
-    padding-right: 150px ; 
-    padding-left: 150px ; 
-    max-width: 95%; 
- }
+    /* Titre */
+    h2 {
+        color: white;
+        margin-bottom: 20px;
+        font-family: 'Avengers', Arial, sans-serif;
+    }
 
-  .like-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: white;
-      color: #ff416c;
-      border: none;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      font-size: 18px;
-  }
+    /* Conteneur */
+    .page-content {
+        padding: 40 10px;
+    }
 
-  .card {
-      position: relative;
-  }
+    /* Bouton favoris */
+    .like-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: white;
+        color: #ff416c;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    /* Cartes */
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .page-content {
+            padding: 0 30px; 
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-content {
+            padding: 0 15px; 
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .bg-white img {
+            height: 150px;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
 </style>
 
 <!-- Script JavaScript pour ajouter une série aux favoris -->
 <script>
-
-  function addToFavorites(serie) {
-    let favorites = JSON.parse(localStorage.getItem("favoritesSeries")) || [];
-    if (!favorites.some(fav => fav.id === serie.id)) {
-        favorites.push(serie);
-        localStorage.setItem("favoritesSeries", JSON.stringify(favorites));
-        alert(`${serie.name} ajouté aux favoris!`);
-    } else {
-        alert(`${serie.name} est déjà dans vos favoris.`);
+    function addToFavorites(serie) {
+        let favorites = JSON.parse(localStorage.getItem("favoritesSeries")) || [];
+        if (!favorites.some(fav => fav.id === serie.id)) {
+            favorites.push(serie);
+            localStorage.setItem("favoritesSeries", JSON.stringify(favorites));
+            alert(`${serie.name} ajouté aux favoris!`);
+        } else {
+            alert(`${serie.name} est déjà dans vos favoris.`);
+        }
     }
-}
 
-  document.querySelectorAll(".like-btn").forEach(button => {
-    button.addEventListener("click", (event) => {
-        const card = event.target.closest(".card");
-        const serieId = event.target.getAttribute("data-id");
-        const serieName = event.target.getAttribute("data-name");
-        const imgElement = card.querySelector("img");
-        const imgSrc = imgElement.getAttribute("src");
+    document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const card = event.target.closest(".card");
+            const serieId = event.target.getAttribute("data-id");
+            const serieName = event.target.getAttribute("data-name");
+            const imgElement = card.querySelector("img");
+            const imgSrc = imgElement.getAttribute("src");
 
-        const serie = { 
-            id: serieId, 
-            name: serieName, 
-            thumbnail: {
-                path: imgSrc.split('.').slice(0, -1).join('.'), 
-                extension: imgSrc.split('.').pop()  
-            }
-        };
+            const serie = { 
+                id: serieId, 
+                name: serieName, 
+                thumbnail: {
+                    path: imgSrc.split('.').slice(0, -1).join('.'), 
+                    extension: imgSrc.split('.').pop()
+                }
+            };
 
-        addToFavorites(serie);
+            addToFavorites(serie);
+        });
     });
-  });
-
-  
-
 </script>
-
 {% endblock %}

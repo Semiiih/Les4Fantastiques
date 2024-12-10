@@ -4,66 +4,67 @@
 {% block title %}Personnages{% endblock %}
 
 {% block content %}
-<div class="container-fluid page-content ">
-    <!-- Image en bannière qui prend toute la largeur -->
-    <div class="d-flex justify-content-center mb-4">
-        <img src="{% static 'heroMarvel.jpg' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
-    </div>
-    <h2 class="text-center">Liste des Personnages Marvel</h2>
-    <div id="characters-container" class="row">
-        {% if characters %}
-            <div class="row">
+<div class='bg-custom'>
+    <div class="container-fluid page-content">
+        <!-- Image en bannière qui prend toute la largeur -->
+        <div class="d-flex justify-content-center mb-4 bg-white">
+            <img src="{% static 'heroMarvel.jpg' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
+        </div>
+        <h2 class="text-center">Liste des Personnages Marvel</h2>
+        
+        <!-- Grille de personnages -->
+        <div id="characters-container" class="row">
+            {% if characters %}
                 {% for character in characters %}
-                    <div class="col-md-3">
-                        <div class="card mb-4" style="position: relative;">
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100">
                             <!-- Image du personnage -->
                             <img src="{{ character.thumbnail.path }}.{{ character.thumbnail.extension }}" class="card-img-top" alt="{{ character.name }}">
-                            <div class="card-body">
-                                <!-- Bouton Ajouter aux favoris -->
+                            <div class="card-body text-center">
                                 <button class="like-btn" data-id="{{ character.id }}" data-name="{{ character.name }}">❤️</button>
                                 <h5 class="card-title">{{ character.name }}</h5>
                                 <p class="card-text">{{ character.description|default:"Description non disponible." }}</p>
-                               
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-            </div>
-        {% else %}
-            <p>Aucun personnage trouvé.</p>
+            {% else %}
+                <p class="text-danger text-center">Aucun personnage trouvé.</p>
+            {% endif %}
+        </div>
+
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
         {% endif %}
     </div>
-
-    {% if error %}
-        <p class="text-danger">{{ error }}</p>
-    {% endif %}
 </div>
 
-<!-- Ajouter du style pour le bouton -->
+<!-- Style -->
 <style>
-    .card-body {
-        height: 300px;
-    }
-
-    h2 {
-        color: #03507E;
-        margin-bottom: 20px;
-    }
-
-    .page-content {
-        padding-right: 150px ; 
-        padding-left: 150px ; 
-        max-width: 95%; 
-    }
-    
+    /* Fond principal qui couvre toute la page */
     .bg-custom {
         background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
         min-height: 100vh;
         display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 
+    .bg-white {
+        background-color: white;
+    }
+
+    h2 {
+        color: white;
+        margin-bottom: 20px;
+        font-family: 'Avengers', Arial, sans-serif;
+    }
+
+    .page-content {
+        padding: 40 ;
+    }
+
+    
     .like-btn {
         position: absolute;
         top: 10px;
@@ -78,8 +79,41 @@
         font-size: 18px;
     }
 
+    
     .card {
-        position: relative;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+
+    /* Responsive pour petits écrans */
+    @media (max-width: 992px) {
+        .page-content {
+            padding: 0 30px; 
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-content {
+            padding: 0 15px; 
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .bg-white img {
+            height: 150px;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
     }
 </style>
 

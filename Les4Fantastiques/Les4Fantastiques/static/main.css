@@ -7,6 +7,26 @@
   flex-grow: 1;
 }
 
+@font-face {
+  font-family: "Avengers";
+  src: url("./fonts/AVENGEANCE\ HEROIC\ AVENGER.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvengersBD";
+  src: url("./fonts/AVENGEANCE\ HEROIC\ AVENGER\ BD.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "AvengersBI";
+  src: url("./fonts/AVENGEANCE\ HEROIC\ AVENGER\ BI.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Gradient button style */
 .btn-gradient {
   background: linear-gradient(to right, #ff416c, #ff4b2b);
@@ -41,7 +61,7 @@
 }
 
 .nav-link:hover {
-  color: #03507e;
+  color: red;
 }
 
 .nav-item {
