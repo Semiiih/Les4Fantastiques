@@ -9,7 +9,6 @@
   <h2 class="text-center">Explorez les personnages, series et mettez vos connaissances à l'epreuve avec notre quizz !</h2>
 
   <div class="row justify-content-center">
-    <!-- Carte Personnages -->
     <div class="col-md-4 mb-4">
       <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" onclick="window.location.href='{% url 'personnage' %}'">
         <img src="{% static 'AffichePersonnage.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Personnages">
@@ -20,7 +19,6 @@
       </div>
     </div>
 
-    <!-- Carte Séries -->
     <div class="col-md-4 mb-4">
       <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" onclick="window.location.href='{% url 'serie' %}'">
         <img src="{% static 'afficheSerie.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Séries">
@@ -31,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Carte Quizz -->
     <div class="col-md-4 mb-4">
       <div class="card text-white bg-dark shadow-lg" style="cursor: pointer;" >
         <img src="{% static 'afficheQuizz.jpg' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Quizz">
