@@ -42,9 +42,12 @@
             </ul>
         </nav>
 
-        <a href="{% url 'login' %}" >
-            <img src="{% static 'spiderman.png' %}" alt="acount" style="position: absolute; top: 60px; right: 50px; width: 70px"/>
-        </a>
+        <div style="position: absolute; top: 60px; right: 50px; display: flex; align-items: center; flex-direction: column;">
+            <a href="{% url 'login' %}" >
+                <img src="{% static 'spiderman.png' %}" alt="acount" style="width: 70px"/>
+            </a>
+            <p>Connecter vous !</p>
+        </div>
         
     </header>
 
