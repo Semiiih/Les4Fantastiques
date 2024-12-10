@@ -1,37 +1,140 @@
-{% load static %} 
-{% block title %}Connexion{% endblock %}
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'main.css' %}">
 
-<div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; padding: 20px; background-color: #f5f5f5;">
-
-  <a href="{% url 'home' %}" style="text-decoration: none; color: #007bff; font-size: 1rem; margin-bottom: 20px;">
+<div class="bg-custom">
+  <a href="{% url 'home' %}" class="back-link">
     <span>👈</span> Retour à l'accueil
   </a>
 
-  <div class="login-form" style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; width: 100%; max-width: 400px;">
-    <h1 style="font-size: 2rem; margin-bottom: 20px;">Connexion</h1>
+  <div class="login-form">
+    <h1>Connexion</h1>
 
-    <form method="POST" style="width: 100%; padding-top: 20px;">
+    {% if messages %}
+      <div class="alert alert-danger">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST">
       {% csrf_token %}
-      
-      <div class="form-group" style="margin-bottom: 15px; text-align: left;">
-        <label for="username" style="font-size: 1rem; display: block; margin-bottom: 5px;">Nom d'utilisateur :</label>
-        <input type="text" id="username" name="username" required style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" required>
       </div>
 
-      <div class="form-group" style="margin-bottom: 15px; text-align: left;">
-        <label for="password" style="font-size: 1rem; display: block; margin-bottom: 5px;">Mot de passe :</label>
-        <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required>
       </div>
 
-      <button type="submit" class="submit-btn" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s ease;">Se connecter</button>
+      <button type="submit" class="submit-btn">Se connecter</button>
     </form>
 
-    <p style="margin-top: 40px; font-size: 1rem;">Vous n'avez pas de compte ?</p>
-    <a href="{% url 'signup' %}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 1rem; transition: background-color 0.3s ease;">
-      Créer un compte
-    </a>
+    <p>Vous n'avez pas de compte ?</p>
+    <a href="{% url 'signup' %}" class="signup-btn">Créer un compte</a>
   </div>
 </div>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  h1, p, label, button, a {
+    font-family: 'Avengers', Arial, sans-serif;
+  }
+
+  .bg-custom {
+    background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .alert {
+    color: white;
+    background-color: #FF416C;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  .back-link {
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+
+  .form-group label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #03507E;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background-color: #02395A;
+  }
+
+  .signup-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .signup-btn:hover {
+    background-color: darkred;
+  }
+</style>
 
 {% endblock %}

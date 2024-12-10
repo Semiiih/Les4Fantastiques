@@ -42,12 +42,23 @@
             </ul>
         </nav>
 
-        <div style="position: absolute; top: 60px; right: 50px; display: flex; align-items: center; flex-direction: column;">
-            <a href="{% url 'login' %}" >
-                <img src="{% static 'spiderman.png' %}" alt="acount" style="width: 70px"/>
+        <div style="position: absolute; top: 30px; right: 50px; text-align: center;">
+            {% if user.is_authenticated %}
+                <p style="margin-bottom: 5px; color: #03507E; font-size: 1rem;">Coucou {{ user.username }} !</p>
+                
+            {% endif %}
+            <a>
+                <img src="{% static 'spiderman.png' %}" alt="account" style="width: 70px; display: block; margin: 0 auto;"/>
             </a>
-            <p>Connecter vous !</p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" style="color: red; text-decoration: none;">se deconnecter</a>
+            {% endif %}
+            {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}" style="margin-top: 10px; color: red; font-size: 20px; display: block; text-decoration: none;">se connecter</a>
+            {% endif %}
         </div>
+        
+        
         
     </header>
 

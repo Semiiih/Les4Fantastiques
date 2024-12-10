@@ -6,20 +6,17 @@
 {% block content %}
 <div class='bg-custom'>
     <div class="container-fluid page-content">
-        <!-- Image en bannière avec fond blanc -->
         <div class="d-flex justify-content-center mb-4 bg-white">
             <img src="{% static 'heroMarvel2.png' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
         </div>
 
         <h2 class="text-center">Liste des Series Marvel</h2>
         
-        <!-- Grille des séries -->
         <div id="series-container" class="row">
             {% if series %}
                 {% for serie in series %}
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                         <div class="card h-100">
-                            <!-- Image de la série -->
                             <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" class="card-img-top" alt="{{ serie.title }}">
                             <div class="card-body text-center">
                                 <button class="like-btn" data-id="{{ serie.id }}" data-name="{{ serie.title }}">❤️</button>
@@ -40,7 +37,6 @@
     </div>
 </div>
 
-<!-- Styles -->
 <style>
     /* Fond principal */
     .bg-custom {
