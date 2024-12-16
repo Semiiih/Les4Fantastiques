@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import HomeView, PersonnageView, LoginView, SerieView, FavoriView
+from .views import HomeView, PersonnageView, LoginView, SerieView, FavoriView, QuizzView
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
@@ -24,4 +24,6 @@ urlpatterns = [
     path("serie/", SerieView.as_view(), name="serie"),
     path("login/", LoginView.as_view(), name="login"),
     path("favori/", FavoriView.as_view(), name="favori"),
+    path("quizz/", QuizzView.as_view(), name="quizz"),
+
 ]

@@ -6,3 +6,5 @@ from .login import *
 from .serie import *
 from .serie import *
 from .favori import *
+from .quizz import *
+from .models import *

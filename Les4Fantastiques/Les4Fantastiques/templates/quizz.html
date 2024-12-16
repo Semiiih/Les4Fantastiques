@@ -1,0 +1,58 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Quiz Marvel{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Quiz Marvel</h2>
+
+  {% if show_corrections %}
+  <!-- Affichage des corrections et du score -->
+  <h3>Correction du Quiz</h3>
+  <p><strong>Votre score : {{ score }} / 10</strong></p>
+  <ul>
+    {% for correction in corrections %}
+    <li>
+      <strong>Question :</strong> {{ correction.question_text }}<br>
+      <strong>Votre réponse :</strong>
+      {% if correction.user_answer %}
+        {% if correction.is_correct %}
+        <span style="color: green;">{{ correction.user_answer }}</span> ✅
+        {% else %}
+        <span style="color: red;">{{ correction.user_answer }}</span> ❌
+        {% endif %}
+      {% else %}
+      <em>Aucune réponse sélectionnée</em>
+      {% endif %}
+      <br>
+      <strong>Bonne réponse :</strong> <span style="color: green;">{{ correction.correct_answer }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  <!-- Bouton pour rejouer le quiz -->
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" name="replay_quiz" class="btn btn-primary mt-4">Rejouer</button>
+  </form>
+
+  {% else %}
+  <!-- Affichage de la question actuelle -->
+  {% if error %}
+  <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+  <p>Question {{ question_number }} sur {{ total_questions }}</p>
+  <h4>{{ question.question_text }}</h4>
+  <form method="POST">
+    {% csrf_token %}
+    {% for choice in question.choices.all %}
+    <div>
+      <input type="radio" id="choice_{{ choice.id }}" name="answer" value="{{ choice.id }}">
+      <label for="choice_{{ choice.id }}">{{ choice.choice_text }}</label>
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-success mt-3">Confirmer</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

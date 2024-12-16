@@ -29,6 +29,9 @@
                     <a class="nav-link {% if request.resolver_match.url_name == 'serie' %}active{% endif %}" href="{% url 'serie' %}">Serie</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'quizz' %}active{% endif %}" href="{% url 'quizz' %}">Quizz</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {% if request.resolver_match.url_name == 'favori' %}active{% endif %}" href="{% url 'favori' %}">
                         <i class="fas fa-star"></i> Favoris
                     </a>
