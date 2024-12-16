@@ -1,29 +1,28 @@
-{% load static %}
+{% load static %} 
 {% block content %}
 <link rel="stylesheet" href="{% static 'main.css' %}">
+
 
 <div class="bg-custom">
   <a href="{% url 'home' %}" class="back-link">
     <span>👈</span> Retour à l'accueil
   </a>
 
-  <div class="login-form">
-    <h1>Connexion</h1>
-
-    {% if messages %}
-      <div class="alert alert-danger">
-        {% for message in messages %}
-          {{ message }}
-        {% endfor %}
-      </div>
-    {% endif %}
+  <div class="signup-form">
+    <h1>Créer un compte</h1>
+    <p>Inscrivez-vous pour commencer</p>
 
     <form method="POST">
       {% csrf_token %}
-
+      
       <div class="form-group">
         <label for="username">Nom d'utilisateur :</label>
         <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" required>
       </div>
 
       <div class="form-group">
@@ -31,14 +30,20 @@
         <input type="password" id="password" name="password" required>
       </div>
 
-      <button type="submit" class="submit-btn">Se connecter</button>
+      <div class="form-group">
+        <label for="confirm_password">Confirmer le mot de passe :</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+      </div>
+
+      <button type="submit" class="submit-btn">S'inscrire</button>
     </form>
 
-    <p>Vous n'avez pas de compte ?</p>
-    <a href="{% url 'signup' %}" class="signup-btn">Créer un compte</a>
+    <p>Vous avez deja un compte ?</p>
+    <a href="{% url 'login' %}" class="signup-btn">Se connecter</a>
   </div>
 </div>
 
+<!-- Style -->
 <style>
   body {
     margin: 0;
@@ -60,14 +65,7 @@
     margin: 0;
   }
 
-  .alert {
-    color: white;
-    background-color: #FF416C;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    padding: 10px;
-  }
-
+  /* Bouton retour */
   .back-link {
     text-decoration: none;
     color: white;
@@ -75,7 +73,8 @@
     margin-bottom: 20px;
   }
 
-  .login-form {
+  /* Formulaire */
+  .signup-form {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -83,7 +82,19 @@
     width: 100%;
     max-width: 400px;
     padding: 20px;
+    box-sizing: border-box;
     margin: 0 auto;
+  }
+
+  .signup-form h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #03507E;
+  }
+
+  .signup-form p {
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
 
   .form-group {
@@ -92,23 +103,27 @@
   }
 
   .form-group label {
+    font-family: 'Arial', sans-serif;
     font-size: 1rem;
-    display: block;
+    color: #333;
     margin-bottom: 5px;
+    display: block;
   }
 
   .form-group input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
   }
 
+  /* Bouton d'inscription */
   .submit-btn {
     width: 100%;
     padding: 10px;
-    background-color: #03507E;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
@@ -118,13 +133,14 @@
   }
 
   .submit-btn:hover {
-    background-color: #02395A;
+    background-color: #218838;
   }
 
+  /* Bouton connexion */
   .signup-btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: red;
+    background-color: #03507E;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -133,7 +149,28 @@
   }
 
   .signup-btn:hover {
-    background-color: darkred;
+    background-color: #0056b3;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .signup-form {
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .signup-form h1 {
+      font-size: 1.5rem;
+    }
+
+    .form-group input {
+      padding: 8px;
+    }
+
+    .submit-btn, .signup-btn {
+      font-size: 1rem;
+    }
   }
 </style>
 

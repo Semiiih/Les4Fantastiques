@@ -1,10 +1,57 @@
 .header {
-  background-color: #f8f9fa; /* Couleur de fond légère */
-  border-bottom: 2px solid #dee2e6; /* Bordure en bas */
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
 }
 
 .logo {
   flex-grow: 1;
+}
+
+@font-face {
+  font-family: "Avengers";
+  src: url("./fonts/AVENGEANCE\ HEROIC\ AVENGER.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AvengersBD";
+  src: url("./fonts/AVENGEANCE\ HEROIC\ AVENGER\ BD.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "AvengersBI";
+  src: url("./fonts/AVENGEANCE\ HEROIC\ AVENGER\ BI.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Gradient button style */
+.btn-gradient {
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.page-content {
+  padding-right: 150px;
+  padding-left: 150px;
+  max-width: 95%;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(to right, #ff4b2b, #ff416c);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
 }
 
 .nav-list {
@@ -13,20 +60,24 @@
   margin-bottom: 0;
 }
 
+.nav-link:hover {
+  color: red;
+}
+
 .nav-item {
-  margin-left: 20px; /* Espacement entre les liens */
+  margin-left: 20px;
 }
 
 .nav-link {
   text-decoration: none;
   color: #000;
-  padding-bottom: 10px; /* Espacement en bas pour aligner les liens */
+  padding-bottom: 10px;
   position: relative;
 }
 
 .nav-link.active {
   font-weight: bold;
-  color: #007bff; /* Couleur active */
+  color: #03507e;
 }
 
 .nav-link::after {
@@ -34,7 +85,7 @@
   display: block;
   width: 0;
   height: 2px;
-  background: #007bff;
+  background: red;
   transition: width 0.3s;
   position: absolute;
   bottom: 0;
@@ -42,9 +93,9 @@
 }
 
 .nav-link:hover::after {
-  width: 100%; /* Animation survol */
+  width: 100%;
 }
 
 .svg-margin {
-  margin-top: 20px; /* Ajuste cette valeur selon ton besoin */
+  margin-top: 20px;
 }

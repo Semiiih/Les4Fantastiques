@@ -4,57 +4,198 @@
 {% block title %}Favoris{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h2>Vos personnages en favoris</h2>
-  <div id="favorites-container" class="row"></div>
-
-  <h2>Vos series en favoris</h2>
+<div class="bg-custom">
+    <div class="container page-content">
+        <h2 class="pt-5 text-center">Vos personnages en favoris</h2>
+        <div class="separate"></div>
+        <div id="favorites-container" class="row justify-content-center"></div>
+        
+        <h2 class="espace text-center">Vos séries en favoris</h2>
+        <div class="separate"></div>
+        <div id="favorites-series-container" class="row justify-content-center"></div>
+    </div>
 </div>
 
+<style>
+    .page-content {
+        padding-right: 150px;
+        padding-left: 150px;
+        max-width: 100%;
+    }
+
+    .bg-custom {
+        background: linear-gradient(135deg, #03507E 30%, #D20505 100%);
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+
+    h2 {
+        color: white;
+        margin-bottom: 30px;
+        font-family: 'AvengersBI';
+    }
+
+    .espace {
+        padding-top: 40px;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card img {
+        object-fit: cover;
+        height: 200px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .delete-btn, .delete-series-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: white;
+        color: red;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .separate {
+        border: 3px solid white;
+        margin-bottom: 40px;
+    }
+    
+
+    /* Responsive pour tablettes */
+    @media (max-width: 992px) {
+        .page-content {
+            padding-right: 50px;
+            padding-left: 50px;
+        }
+    }
+
+
+    /* Responsive pour mobiles */
+    @media (max-width: 768px) {
+        .page-content {
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+        .card img {
+            height: 150px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        h2 {
+            font-size: 1.2rem;
+        }
+        .card img {
+            height: 120px;
+        }
+    }
+</style>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const container = document.getElementById("favorites-container");
+    document.addEventListener("DOMContentLoaded", () => {
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const charactersContainer = document.getElementById("favorites-container");
 
-    if (favorites.length === 0) {
-      container.innerHTML = "<p>Vous n'avez pas encore ajouté de personnages en favoris.</p>";
-    } else {
-      let htmlContent = "";
-      favorites.forEach((character) => {
-        htmlContent += `
-          <div class="col-md-3">
-            <div class="card mb-4">
-              <img src="${character.thumbnail.path}.${character.thumbnail.extension}" class="height100 alt="${character.name}">
-              <div class="card-body">
-                <h5 class="card-title">${character.name}</h5>
-                <p class="card-text">${character.description || "Description non disponible."}</p>
-              </div>
-              <button class="delete-btn" data-id="${character.id}" style="position: absolute; top: 10px; right: 10px; background-color: white; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer;">
-                🗑️
-              </button>
-            </div>
-          </div>
-        `;
-      });
+        if (favorites.length === 0) {
+            charactersContainer.innerHTML = "<p class='text-center text-white'>Vous n'avez pas encore ajouté de personnages en favoris.</p>";
+        } else {
+            let htmlContent = "";
+            favorites.forEach((character) => {
+                const imgSrc = character.thumbnail && character.thumbnail.path && character.thumbnail.extension
+                    ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+                    : '{% static "default-character.jpeg" %}';
+                htmlContent += `
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 position-relative">
+                            <img src="${imgSrc}" class="img-fluid" alt="${character.name}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">${character.name}</h5>
+                                <p class="card-text">${character.description || "Description non disponible."}</p>
+                            </div>
+                            <button class="delete-btn" data-id="${character.id}">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            charactersContainer.innerHTML = htmlContent;
 
-      container.innerHTML = htmlContent;
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const characterId = event.target.getAttribute('data-id');
+                    removeFromFavorites(characterId);
+                });
+            });
+        }
 
-      // Ajouter des événements de clic sur chaque bouton "poubelle"
-      document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', (event) => {
-          const characterId = event.target.getAttribute('data-id');
-          removeFromFavorites(characterId);
-        });
-      });
-    }
+        function removeFromFavorites(characterId) {
+            favorites = favorites.filter(character => character.id != characterId);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            location.reload();
+        }
 
-    // Fonction pour supprimer un personnage des favoris
-    function removeFromFavorites(characterId) {
-      favorites = favorites.filter(character => character.id != characterId);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      // Recharger la page après suppression
-      location.reload();
-    }
-  });
+        // Séries
+        let favoritesSeries = JSON.parse(localStorage.getItem('favoritesSeries')) || [];
+        const seriesContainer = document.getElementById("favorites-series-container");
+
+        if (favoritesSeries.length === 0) {
+            seriesContainer.innerHTML = "<p class='text-center text-white'>Vous n'avez pas encore ajouté de séries en favoris.</p>";
+        } else {
+            let seriesHtmlContent = "";
+            favoritesSeries.forEach((serie) => {
+                const imgSrc = serie.thumbnail && serie.thumbnail.path && serie.thumbnail.extension
+                    ? `${serie.thumbnail.path}.${serie.thumbnail.extension}`
+                    : '{% static "default-character.jpeg" %}';
+                seriesHtmlContent += `
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 position-relative">
+                            <img src="${imgSrc}" class="img-fluid" alt="${serie.name}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">${serie.name}</h5>
+                                <p class="card-text">${serie.description || "Description non disponible."}</p>
+                            </div>
+                            <button class="delete-series-btn" data-id="${serie.id}">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
+            seriesContainer.innerHTML = seriesHtmlContent;
+
+            document.querySelectorAll('.delete-series-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const serieId = event.target.getAttribute('data-id');
+                    removeFromSeriesFavorites(serieId);
+                });
+            });
+        }
+
+        function removeFromSeriesFavorites(serieId) {
+            favoritesSeries = favoritesSeries.filter(serie => serie.id != serieId);
+            localStorage.setItem('favoritesSeries', JSON.stringify(favoritesSeries));
+            location.reload();
+        }
+    });
 </script>
 {% endblock %}

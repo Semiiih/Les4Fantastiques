@@ -1,27 +1,153 @@
 {% extends "_base.html" %}
 {% load static %}
-{% block title %}Séries{% endblock %}
+
+{% block title %}Séries Marvel{% endblock %}
+
 {% block content %}
-<div class="container">
-  <h2>Page des Séries</h2>
-  <p>Bienvenue sur notre page de séries Marvel.</p>
+<div class='bg-custom'>
+    <div class="container-fluid page-content">
+        <div class="d-flex justify-content-center mb-4 bg-white">
+            <img src="{% static 'heroMarvel2.png' %}" class="img-fluid w-100" style="height: 200px; object-fit: cover;" alt="Marvel Series">
+        </div>
 
-  {% if series %}
-    <ul>
-      {% for serie in series %}
-        <li>
-          <h3>{{ serie.name }}</h3>
-          <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" alt="{{ serie.name }}">
-          <p>{{ serie.description }}</p>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Aucune série trouvée.</p>
-  {% endif %}
+        <h2 class="text-center">Liste des Series Marvel</h2>
+        
+        <div id="series-container" class="row">
+            {% if series %}
+                {% for serie in series %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100">
+                            <img src="{{ serie.thumbnail.path }}.{{ serie.thumbnail.extension }}" class="card-img-top" alt="{{ serie.title }}">
+                            <div class="card-body text-center">
+                                <button class="like-btn" data-id="{{ serie.id }}" data-name="{{ serie.title }}">❤️</button>
+                                <h5 class="card-title">{{ serie.title }}</h5>
+                                <p class="card-text">{{ serie.description|default:"Description non disponible." }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-danger text-center">Aucune série trouvée.</p>
+            {% endif %}
+        </div>
 
-  {% if error %}
-    <p class="error">{{ error }}</p>
-  {% endif %}
+        {% if error %}
+            <p class="text-danger">{{ error }}</p>
+        {% endif %}
+    </div>
 </div>
+
+<style>
+    /* Fond principal */
+    .bg-custom {
+        background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    /* Bannière */
+    .bg-white {
+        background-color: white;
+    }
+
+    /* Titre */
+    h2 {
+        color: white;
+        margin-bottom: 20px;
+        font-family: 'Avengers', Arial, sans-serif;
+    }
+
+    /* Conteneur */
+    .page-content {
+        padding: 40 10px;
+    }
+
+    /* Bouton favoris */
+    .like-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: white;
+        color: #ff416c;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    /* Cartes */
+    .card {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+        .page-content {
+            padding: 0 30px; 
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-content {
+            padding: 0 15px; 
+        }
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .bg-white img {
+            height: 150px;
+        }
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<!-- Script JavaScript pour ajouter une série aux favoris -->
+<script>
+    function addToFavorites(serie) {
+        let favorites = JSON.parse(localStorage.getItem("favoritesSeries")) || [];
+        if (!favorites.some(fav => fav.id === serie.id)) {
+            favorites.push(serie);
+            localStorage.setItem("favoritesSeries", JSON.stringify(favorites));
+            alert(`${serie.name} ajouté aux favoris!`);
+        } else {
+            alert(`${serie.name} est déjà dans vos favoris.`);
+        }
+    }
+
+    document.querySelectorAll(".like-btn").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const card = event.target.closest(".card");
+            const serieId = event.target.getAttribute("data-id");
+            const serieName = event.target.getAttribute("data-name");
+            const imgElement = card.querySelector("img");
+            const imgSrc = imgElement.getAttribute("src");
+
+            const serie = { 
+                id: serieId, 
+                name: serieName, 
+                thumbnail: {
+                    path: imgSrc.split('.').slice(0, -1).join('.'), 
+                    extension: imgSrc.split('.').pop()
+                }
+            };
+
+            addToFavorites(serie);
+        });
+    });
+</script>
 {% endblock %}

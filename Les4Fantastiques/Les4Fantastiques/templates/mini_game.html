@@ -1,0 +1,177 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Mini Jeu{% endblock %}
+
+{% block content %}
+<div class='bg-custom'>
+    <div class="container-fluid page-content">
+        <h1 class="text-center text-white my-4">Mini Jeu - Sauter pour survivre !</h1>
+
+        <div class="game-container mx-auto">
+            <div id="dino"></div>
+            <div id="obstacle"></div>
+            <div id="game-over">Game Over ! Appuyez sur F pour rejouer.</div>
+            <div id="score">Score : 0</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-custom {
+        background: linear-gradient(135deg, #03507E 30%, #FF416C 100%);
+        min-height: 100vh;
+        display: flex;
+        padding-top: 100px;
+    }
+
+    .game-container {
+        position: relative;
+        width: 1000px;
+        height: 300px;
+        border: 2px solid #333;
+        background-color: #fff;
+        overflow: hidden;
+    }
+
+    #dino {
+        position: absolute;
+        bottom: 0;
+        left: 50px;
+        width: 100px;
+        height: 100px;
+        background-image: url("{% static 'spidermanJump.png' %}");
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    #obstacle {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        background-image: url("{% static 'batimentJump.png' %}");
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation: moveObstacle 2s infinite linear;
+    }
+
+    @keyframes moveObstacle {
+        from {
+            right: -100px;
+        }
+        to {
+            right: 1000px;
+        }
+    }
+
+    #game-over {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        color: red;
+        font-weight: bold;
+    }
+
+    #score {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 1.5rem;
+        color: #03507E;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    const dino = document.getElementById("dino");
+    const obstacle = document.getElementById("obstacle");
+    const gameOverText = document.getElementById("game-over");
+    const scoreDisplay = document.getElementById("score");
+
+    let isHolding = false;
+    let position = 0;
+    let score = 0;
+    let speed = 2;
+    let gameActive = true;
+
+    document.addEventListener("keydown", (e) => {
+        if ((e.key === " " || e.key === "ArrowUp") && !isHolding && gameActive) {
+            isHolding = true;
+            rise();
+        }
+
+        if (e.key === "f" || e.key === "F") {
+            if (!gameActive) {
+                restartGame();
+            }
+        }
+    });
+
+    document.addEventListener("keyup", (e) => {
+        if ((e.key === " " || e.key === "ArrowUp") && gameActive) {
+            isHolding = false;
+            fall();
+        }
+    });
+
+    function rise() {
+        const riseInterval = setInterval(() => {
+            if (!isHolding || position >= 200) {
+                clearInterval(riseInterval);
+            } else {
+                position += 5;
+                dino.style.bottom = position + "px";
+            }
+        }, 15);
+    }
+
+    function fall() {
+        const fallInterval = setInterval(() => {
+            if (isHolding || position <= 0) {
+                clearInterval(fallInterval);
+            } else {
+                position -= 10;
+                dino.style.bottom = position + "px";
+            }
+        }, 15);
+    }
+
+    const checkCollision = setInterval(() => {
+        const dinoBottom = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+        const obstacleLeft = parseInt(window.getComputedStyle(obstacle).getPropertyValue("left"));
+
+        if (obstacleLeft < 130 && obstacleLeft > 50 && dinoBottom <= 50 && gameActive) {
+            gameOverText.style.display = "block";
+            obstacle.style.animation = "none";
+            gameActive = false;
+        }
+
+        if (obstacleLeft < -50 && gameActive) {
+            score += 1;
+            scoreDisplay.textContent = `Score : ${score}`;
+            speed = Math.max(0.5, speed - 0.1);
+            obstacle.style.animation = "none";
+            void obstacle.offsetWidth;
+            obstacle.style.animation = `moveObstacle ${speed}s infinite linear`;
+        }
+    }, 10);
+
+    function restartGame() {
+        position = 0;
+        score = 0;
+        speed = 2;
+        gameActive = true;
+        dino.style.bottom = "0px";
+        scoreDisplay.textContent = "Score : 0";
+        gameOverText.style.display = "none";
+        obstacle.style.animation = "none";
+        void obstacle.offsetWidth;
+        obstacle.style.animation = `moveObstacle ${speed}s infinite linear`;
+    }
+</script>
+{% endblock %}
