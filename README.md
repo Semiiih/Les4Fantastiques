@@ -43,6 +43,10 @@ Création d'un superuser pour l'admin Django :
 
 - `python3 manage.py createsuperuser`
 
+## Dans les settings.py
+
+- il faut s assurer d'avoir les bons ports et identifiants dans `DATABASES`
+
 ## Démarrage du projet :
 
 Pour lancer en local : `python3 manage.py runserver`
