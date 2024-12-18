@@ -8,8 +8,6 @@ L'objectif de ce projet est de créer un site qui met en avant l'univers Marvel.
 
     -Découvrir les séries associées aux héros et vilains.
 
-    -Tester leurs connaissances sur Marvel grâce à un quizz interactif.
-
     -S'amuser avec un mini-jeu, conçu pour divertir les fans tout en restant dans le thème de Marvel.
 
 Le projet est développé en Python avec le framework Django.
