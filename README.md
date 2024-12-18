@@ -34,14 +34,8 @@ Prérequis:
 
 ## Base De Données:
 
-Création des tables dans la BDD :
-
-- `python3 manage.py makemigrations`
-- `python3 manage.py migrate`
-
-Création d'un superuser pour l'admin Django :
-
-- `python3 manage.py createsuperuser`
+- Création en local de la bdd les4fantastiques
+- importer le fichier sql `les4fantastiques` dedans
 
 ## Dans les settings.py
 
