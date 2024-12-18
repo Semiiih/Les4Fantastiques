@@ -34,6 +34,9 @@
                 <li class="nav-item mx-2">
                     <a class="nav-link {% if request.resolver_match.url_name == 'serie' %}active{% endif %}" href="{% url 'serie' %}">Serie</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'quizz' %}active{% endif %}" href="{% url 'quizz' %}">Quizz</a>
+                </li>
                 <li class="nav-item mx-2 d-none d-lg-block">
                     <a class="nav-link {% if request.resolver_match.url_name == 'mini_game' %}active{% endif %}" href="{% url 'mini_game' %}">Mini Game</a>
                 </li>

@@ -1,0 +1,179 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Quiz Marvel{% endblock %}
+
+{% block content %}
+<div class="quiz-bg">
+  <div class="container quiz-container">
+    <h2 class="quiz-title text-center">Quiz Marvel</h2>
+
+    {% if show_corrections %}
+    <!-- Affichage des corrections et du score -->
+    <div class="score-section text-center">
+      <h3>Correction du Quiz</h3>
+      <p class="quiz-score"><strong>Votre score : {{ score }} / 10</strong></p>
+    </div>
+
+    <div class="corrections-list">
+      {% for correction in corrections %}
+      <div class="correction-card">
+        <p><strong>Question :</strong> {{ correction.question_text }}</p>
+        <p>
+          <strong>Votre réponse :</strong>
+          {% if correction.user_answer %}
+            {% if correction.is_correct %}
+            <span class="text-success">{{ correction.user_answer }}</span> ✅
+            {% else %}
+            <span class="text-danger">{{ correction.user_answer }}</span> ❌
+            {% endif %}
+          {% else %}
+            <em>Aucune réponse sélectionnée</em>
+          {% endif %}
+        </p>
+        <p><strong>Bonne réponse :</strong> <span class="text-success">{{ correction.correct_answer }}</span></p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Bouton pour rejouer le quiz -->
+    <form method="POST" class="text-center mt-4">
+      {% csrf_token %}
+      <button type="submit" name="replay_quiz" class="btn btn-primary btn-lg">Rejouer</button>
+    </form>
+
+    {% else %}
+    <!-- Affichage de la question actuelle -->
+    <div class="question-card">
+      {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+
+      <p class="question-number">Question {{ question_number }} sur {{ total_questions }}</p>
+      <h4 class="question-text">{{ question.question_text }}</h4>
+      <form method="POST" class="mt-3">
+        {% csrf_token %}
+        {% for choice in question.choices.all %}
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="choice_{{ choice.id }}" name="answer" value="{{ choice.id }}">
+          <label for="choice_{{ choice.id }}" class="form-check-label">{{ choice.choice_text }}</label>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success btn-lg mt-3">Confirmer</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Styles -->
+<style>
+  .quiz-bg {
+    background: linear-gradient(135deg, #03507E 30%, #D20505 100%);
+    min-height: 100vh;
+    padding: 50px 0;
+  }
+
+  .quiz-container {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .quiz-title {
+    font-family: 'AvengersBI', sans-serif;
+    color: #D20505;
+    margin-bottom: 20px;
+  }
+
+  .score-section {
+    margin-bottom: 30px;
+  }
+
+  .quiz-score {
+    font-size: 1.5rem;
+    color: #03507E;
+  }
+
+  .corrections-list {
+    margin-top: 20px;
+  }
+
+  .correction-card {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .question-card {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .question-number {
+    font-size: 1.2rem;
+    color: #03507E;
+    margin-bottom: 10px;
+  }
+
+  .question-text {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .form-check-label {
+    font-size: 1.1rem;
+    color: #444;
+  }
+
+  .btn {
+    border-radius: 8px;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+  }
+
+  .btn-primary {
+    background-color: #03507E;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #02416b;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+  }
+
+  @media (max-width: 768px) {
+    .quiz-container {
+      padding: 20px;
+    }
+
+    .quiz-title {
+      font-size: 1.5rem;
+    }
+
+    .btn {
+      font-size: 1rem;
+      padding: 8px 15px;
+    }
+  }
+</style>
+{% endblock %}
