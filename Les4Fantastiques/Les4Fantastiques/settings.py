@@ -82,6 +82,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'Les4Fantastiques',
+        # 'USER': 'root',    # Nom d'utilisateur MySQL
+        # 'PASSWORD': 'root',  
+        # 'HOST': '127.0.0.1',  # Adresse de votre serveur MySQL
+        # 'PORT': '8888',  # Port MySQL (par défaut 3306)
+        # "OPTIONS": {
+        #     "init_command": "SET default_storage_engine=INNODB",
+        # }
     }
 }
 
