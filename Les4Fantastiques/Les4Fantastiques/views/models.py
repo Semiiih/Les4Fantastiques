@@ -1,8 +1,8 @@
 from datetime import datetime
 from django.db import models
-from django.db import models
 from django.contrib.auth.models import User
-
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
 class Question(models.Model):
     # Texte de la question
@@ -58,8 +58,24 @@ class Score(models.Model):
         related_name="score", 
         unique=True
     )  # Relie chaque utilisateur à un score unique
-    best_score = models.IntegerField(default=0)  # Meilleur score de l'utilisateur
+    best_score = models.IntegerField(max_length=100, default=0)  # Meilleur score de l'utilisateur
     updated_at = models.DateTimeField(auto_now=True)  # Date de mise à jour du score
 
     def __str__(self):
         return f"{self.user.username} - Meilleur score : {self.best_score}"
+    
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(max_length=150,unique=True)
+    username = models.CharField(max_length=150, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+    class Meta:
+        db_table = 'user'
+
+    def __str__(self):
+        return self.username
