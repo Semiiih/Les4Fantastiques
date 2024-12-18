@@ -79,15 +79,13 @@ WSGI_APPLICATION = 'Les4Fantastiques.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        # !!! A remplacer avec vos informations de connexion !!!
-        'NAME': "les4fantastiques2",
-        "USER": "root",
-        "PASSWORD": "root",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
-
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'les4fantastiques',  # Remplace par ton nom de base de données
+        'USER': 'root',  # L'utilisateur par défaut de MAMP
+        'PASSWORD': 'root',  # Le mot de passe par défaut de MAMP
+        'HOST': '127.0.0.1',  # Adresse de ton serveur MySQL local (localhost aussi fonctionne)
+        'PORT': '8889',  # Le port MySQL de MAMP (par défaut 8889)
     }
 }
 

@@ -64,18 +64,3 @@ class Score(models.Model):
     def __str__(self):
         return f"{self.user.username} - Meilleur score : {self.best_score}"
     
-class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=150,unique=True)
-    username = models.CharField(max_length=150, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
-    class Meta:
-        db_table = 'user'
-
-    def __str__(self):
-        return self.username
