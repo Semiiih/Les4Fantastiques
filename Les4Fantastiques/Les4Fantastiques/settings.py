@@ -80,17 +80,12 @@ WSGI_APPLICATION = 'Les4Fantastiques.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Les4Fantastiques',
-        'USER': 'root',    # Nom d'utilisateur MySQL
-        'PASSWORD': 'root',  
-        'HOST': '127.0.0.1',  # Adresse de votre serveur MySQL
-        'PORT': '8888',  # Port MySQL (par défaut 3306)
-        "OPTIONS": {
-            "init_command": "SET default_storage_engine=INNODB",
-        }
+        'NAME': 'les4fantastiques',  # Remplace par ton nom de base de données
+        'USER': 'root',  # L'utilisateur par défaut de MAMP
+        'PASSWORD': 'root',  # Le mot de passe par défaut de MAMP
+        'HOST': '127.0.0.1',  # Adresse de ton serveur MySQL local (localhost aussi fonctionne)
+        'PORT': '8889',  # Le port MySQL de MAMP (par défaut 8889)
     }
 }
 
