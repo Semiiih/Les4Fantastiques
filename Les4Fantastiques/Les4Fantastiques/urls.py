@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import HomeView, PersonnageView, LoginView, SignupView, SerieView, FavoriView, MiniGameView
+from .views import HomeView, PersonnageView, LoginView, SignupView, SerieView, FavoriView, QuizzView, MiniGameView
 from django.shortcuts import redirect
 from django.views import View
 
@@ -36,4 +36,6 @@ urlpatterns = [
     path("favori/", FavoriView.as_view(), name="favori"),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path("mini_game/", MiniGameView.as_view(), name="mini_game"), 
+    path("quizz/", QuizzView.as_view(), name="quizz"),
+
 ]

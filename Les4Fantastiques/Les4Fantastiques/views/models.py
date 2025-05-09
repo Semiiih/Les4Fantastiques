@@ -1,15 +1,17 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
 class Question(models.Model):
     # Texte de la question
     question_text = models.CharField(max_length=255)  # Champ pour le texte de la question
-
-#Bonne réponse (en texte, utilisée pour la correspondance éventuelle)
+    
+    # Bonne réponse (en texte, utilisée pour la correspondance éventuelle)
     correct_answer = models.CharField(max_length=255, default="")  # Bonne réponse associée à la question
-
-#Niveau de difficulté (Facile, Moyen, Difficile)
+    
+    # Niveau de difficulté (Facile, Moyen, Difficile)
     difficulty_level = models.CharField(
         max_length=50,
         choices=[
@@ -19,14 +21,15 @@ class Question(models.Model):
         ],
         default='Facile'
     )
+    
+    # Catégorie de la question
 
-#Catégorie de la question
     category = models.CharField(max_length=100, default='Héros')  # Ajout d'un default ici
 
     # Date de création
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, default=datetime.now())
 
-    def str(self):
+    def __str__(self):
         return self.question_text
 
 
@@ -37,28 +40,27 @@ class Choice(models.Model):
         related_name='choices',  # Permet de récupérer facilement les choix liés à une question
         on_delete=models.CASCADE  # Supprimer les choix si la question est supprimée
     )
-
-#Texte du choix
+    
+    # Texte du choix
     choice_text = models.CharField(max_length=255)  # Texte de la réponse
-
-#Indique si c'est la bonne réponse
+    
+    # Indique si c'est la bonne réponse
     is_correct = models.BooleanField(default=False)
 
-    def str(self):
+    def __str__(self):
         return self.choice_text
     
 
+class Score(models.Model):
+    user = models.OneToOneField(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name="score", 
+        unique=True
+    )  # Relie chaque utilisateur à un score unique
+    best_score = models.IntegerField(max_length=100, default=0)  # Meilleur score de l'utilisateur
+    updated_at = models.DateTimeField(auto_now=True)  # Date de mise à jour du score
 
-class CustomUser(models.Model):
-    id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    mdp = models.CharField(max_length=64)
-    created_at = models.DateTimeField(auto_now_add=True) 
-
-    class Meta:
-        db_table = 'user'
-
-
-
-print('iciiiii', CustomUser.objects.all())
+    def __str__(self):
+        return f"{self.user.username} - Meilleur score : {self.best_score}"
+    
